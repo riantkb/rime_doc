@@ -10,6 +10,7 @@ Welcome to Rime's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   index_old
 
 
 Indices and tables
@@ -18,3 +19,5 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+:doc:`index_old`
