@@ -1,9 +1,15 @@
 インストール
 ============
 
-Github のプロジェクトページ https://github.com/icpc-jag/rime から ZIP をダウンロードするか、git を使って次のように clone してください::
+.. note:: TODO:
+    requirements (and python version)
 
-    $ git clone https://github.com/icpc-jag/rime.git
+まず、Python3 が動く環境を用意する必要があります。
 
-リポジトリのトップディレクトリにある rime.py および rime ディレクトリが Rime の本体です。
-自分のプロジェクトで Rime を使用するときは、この 2 つを問題データを管理しているリポジトリなどにコピーして下さい。
+その上で、https://github.com/icpc-jag/rime にあるように
+
+.. code-block:: sh
+
+    pip install git+https://github.com/icpc-jag/rime
+
+を実行することでインストールすることができます。
