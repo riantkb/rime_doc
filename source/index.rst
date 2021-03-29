@@ -3,21 +3,47 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Rime's documentation!
+
 ================================
+Rime
+================================
+
+https://github.com/icpc-jag/rime
+
+----
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: 最初のステップ
 
-   index_old
+   intro/overview
+   intro/install
 
+----
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 2
+   :caption: チュートリアル
+
+   intro/quickstart
+
+----
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Rime の構成
+
+   ref/structure
+   ref/configuration
+   ref/testspec
+   ref/command
+
+----
+
+Indices
+================================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
-:doc:`index_old`
+.. * :ref:`modindex`
+.. * :ref:`search`
