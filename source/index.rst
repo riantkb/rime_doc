@@ -10,6 +10,11 @@ Rime
 
 https://github.com/icpc-jag/rime
 
+
+.. admonition:: このページに関して
+
+   このページは、 `Rime <https://github.com/icpc-jag/rime>`_ の **非公式** ドキュメントです。一部の記述を `公式ドキュメント <https://rime.readthedocs.io/ja/latest/>`_ から転載および改変して使用しています。
+
 ----
 
 .. toctree::
