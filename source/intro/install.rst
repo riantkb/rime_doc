@@ -2,20 +2,20 @@
 ============
 
 
-.. admonition:: TODO
+.. attention::
 
-    write requirements (and python version)
+    ここでは、Python（および pip）がすでにインストール済みであるとして説明をします。もしまだ Python をインストールしていない場合は、https://www.python.jp/install/install.html などを参考にインストールをしてください。
 
 
-ここでは、Python がすでにインストール済みであるとして説明をします。https://github.com/icpc-jag/rime にあるように、以下のコマンドをシェルスクリプトで実行することでインストールができます（先頭の $ は入力待ちを示す記号です）。
+以下のコマンドをシェルスクリプトで実行することでインストールができます（先頭の $ は入力待ちを示す記号です）。
 
-::
+.. code-block:: console
 
     $ pip install git+https://github.com/icpc-jag/rime
 
 インストールが正常に完了していると、``rime`` というコマンドと ``rime_init`` というコマンドが使えるようになっているはずです。
 
-::
+.. code-block:: console
 
     $ rime --help
     rime.py <command> [<options>...] [<args>...]

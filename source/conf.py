@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Rime'
+project = 'Rime 非公式ドキュメント'
 copyright = '2021, riantkb'
 author = 'riantkb'
 

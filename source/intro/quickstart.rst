@@ -1,143 +1,454 @@
+
+================
 クイックスタート
 ================
 
-ここでは、あらかじめ用意された設定例を使って Rime を実行し、Rime の機能の概略を紹介します。
+実際に簡単な問題の準備を行うことで、Rime の使い方に慣れていきましょう。
 
-以下では、前節で ~/src/rime に Rime をダウンロードしたと仮定します。
+.. admonition:: TODO
 
-.. code-block:: bash
+    for windows (?)
 
-    $ cd ~/src/rime
 
-このディレクトリには次のようなファイルが存在するはずです(最新版ではもう少しファイルが多い可能性もあります)。
+----
 
-.. code-block:: bash
 
-    $ ls -l
-    total 12
-    -rw-r--r-- 1 nya nya    0 May 11 23:55 README
-    drwxr-xr-x 3 nya nya 4096 May 11 23:55 example
-    drwxr-xr-x 6 nya nya 4096 May 11 23:55 rime
-    -rwxr-xr-x 1 nya nya 1215 May 11 23:55 rime.py
+作業用ディレクトリの準備
+================================
 
-example ディレクトリには設定例が用意されていますので、そこに移動しましょう。
+まず、作問準備の作業用ディレクトリを用意しましょう。ディレクトリ名はなんでも良いです。
 
-.. code-block:: bash
+用意したディレクトリに移動したのち、以下を実行します。
 
-    $ cd example
-    $ ls -l
-    total 8
-    -rw-r--r-- 1 nya nya   96 May 11 23:55 PROJECT
-    drwxr-xr-x 6 nya nya 4096 May 11 23:55 a+b
-    lrwxrwxrwx 1 nya nya    7 May 12 00:10 rime -> ../rime
-    lrwxrwxrwx 1 nya nya   10 May 11 23:55 rime.py -> ../rime.py
+.. code-block:: console
 
-このディレクトリ以下には、コンテストの問題・解答・入出力ジェネレータなど全てに関する設定が保存されています。このようなディレクトリを **プロジェクトディレクトリ** と呼びます。
+    $ rime_init --git
 
-プロジェクトディレクトリには Rime 本体とプロジェクト設定ファイル(PROJECT)、そして問題ディレクトリを置きます。問題ディレクトリは通常複数あるでしょうが、この例では一問だけ (a+b) 用意されています。プロジェクトディレクトリ以下には Rime が認識するもの以外のディレクトリやファイルがあっても問題ありません。なお、このプロジェクト例では簡単のため Rime 本体をシンボリックリンクとして置いてありますが、通常のプロジェクトではファイルをまるごとコピーして置くと良いでしょう。
+すると、``PROJECT`` というファイルと ``common/`` というフォルダ（および git 管理に用いられる ``.git/``, ``.gitignore``）が生成されます。``PROJECT`` にはいくつかの設定が書かれていますが、このチュートリアルではそれらを編集することはありません。
 
-早速 Rime を実行してみましょう。
+.. code-block:: console
 
-.. code-block:: bash
+    $ ls
+    PROJECT    common
 
-    $ ./rime.py test
-    [ GENERATE ] a+b/tests: generator.py
-    [ VALIDATE ] a+b/tests: OK
-    [ COMPILE  ] a+b/cpp-correct
-    [  REFRUN  ] a+b/cpp-correct
-    [ COMPILE  ] a+b/cpp-TLE
-    [   TEST   ] a+b/cpp-TLE: 11-maximum.in: Time Limit Exceeded
-    [ COMPILE  ] a+b/cpp-WA-multiply
-    [   TEST   ] a+b/cpp-WA-multiply: Expectedly failed all challenge cases
-    [   TEST   ] a+b/cpp-correct: max 0.00s, acc 0.09s
-    [   TEST   ] a+b/python-correct: max 0.04s, acc 0.72s
+
+.. admonition:: COMMENT
+
+    自動的に ``git commit`` までされてしまうの若干嫌な気もするけどまぁいいのかな。
+    git に慣れていない人が多いだろうし ``git init`` と ``.gitignore`` 生成までは嬉しい気もかなりするけど。
+
+
+----
+
+
+新規問題の作成
+================================
+
+それでは早速問題を作ってみましょう。今回は以下のような問題を準備することにします。
+
+::
+
+    問題
+    整数 A, B が与えられます。 A + B を出力してください。
+
+    制約
+    0 <= A, B <= 10
+
+
+まず、新規問題の作成を行います。以下のコマンドを実行してみましょう。
+
+.. code-block:: console
+
+    $ rime add . problem aplusb
+
+上の ``aplusb`` のところが問題ディレクトリ名になります。例えば ``aminusb`` という問題ディレクトリを作りたければ、``rime add . problem aminusb`` とすれば良いです。詳しくはこちら [TODO] をご覧ください。
+
+
+.. attention::
+
+    上のコマンドを実行すると、コンソールが謎の文字列に覆われて再起不能に見えるようになるかもしれません。これは問題の設定ファイルをその場で編集できるようになっており、それに用いられる既定のエディタが Vim に設定されていることに起因するものです。もし Vim の使い方に明るくないならば、慌てずに ``:q`` と打ってエンターキーを押しましょう。
+
+
+.. admonition:: COMMENT
+
+    エディター起動しないのをデフォルトにしたいですね……
+
+
+すると、``aplusb/`` というディレクトリが作られます。このディレクトリに移動してみましょう。中には、``PROBLEM`` というファイル 1 つだけが入っています。
+
+
+.. code-block:: console
+
+    $ ls
+    PROJECT    aplusb     common
+    $ cd aplusb/
+    $ ls
+    PROBLEM
+
+
+``PROBLEM`` ファイルの中身は以下のようになっています。このファイルも、6 行目の ``time_limit`` （Rime におけるその問題の実行時間制限）の値を適宜変更する以外は基本的に編集する必要はありません。
+
+.. code-block:: python
+    :linenos:
+    :caption: PROBLEM
+    :emphasize-lines: 6
+
+    # -*- coding: utf-8; mode: python -*-
+
+    pid='X'
+
+    problem(
+      time_limit=1.0,
+      id=pid,
+      title=pid + ": Your Problem Name",
+      #wiki_name="Your pukiwiki page name", # for wikify plugin
+      #assignees=['Assignees', 'for', 'this', 'problem'], # for wikify plugin
+      #need_custom_judge=True, # for wikify plugin
+      #reference_solution='???',
+    )
+
+    atcoder_config(
+      task_id=None # None means a spare
+    )
+
+
+.. tip::
+
+    12 行目の ``reference_solution`` のコメントアウトを解除して適切に設定することで、想定解出力にどの解答プログラムを利用するかを選択することもできます。複数の解答プログラムで速度に差がある場合や、正答となる出力が複数存在する場合などに役立つかもしれません。
+
+    詳しくは こちら [TODO] を参照してください。
+
+
+----
+
+
+解答プログラムの作成
+================================
+
+次に、解答プログラムを作成してみます。先ほど作成した ``aplusb/`` ディレクトリ内で、以下のコマンドを実行してみましょう。
+
+.. code-block:: console
+
+    $ rime add . solution cpp_correct
+
+上の ``cpp_correct`` のところが解答プログラムのディレクトリ名になります。ここの名前はなんでも良いです。
+
+すると、（エディタが起動したのち、） ``cpp_correct/`` というディレクトリが作られます。このディレクトリに移動してみましょう。中には、``SOLUTION`` というファイル 1 つだけが入っています。
+
+
+.. code-block:: console
+
+    $ ls
+    PROBLEM     cpp_correct
+    $ cd cpp_correct/
+    $ ls
+    SOLUTION
+
+
+``SOLUTION`` ファイルの中身は以下のようになっています。
+
+.. code-block:: python
+    :linenos:
+    :caption: SOLUTION
+    :emphasize-lines: 5
+
+    # -*- coding: utf-8; mode: python -*-
+
+    ## Solution
+    #c_solution(src='main.c') # -lm -O2 as default
+    #cxx_solution(src='main.cc', flags=[]) # -std=c++11 -O2 as default
+    #kotlin_solution(src='main.kt') # kotlin
+    #java_solution(src='Main.java', encoding='UTF-8', mainclass='Main')
+    #java_solution(src='Main.java', encoding='UTF-8', mainclass='Main',
+    #              challenge_cases=[])
+    #java_solution(src='Main.java', encoding='UTF-8', mainclass='Main',
+    #              challenge_cases=['10_corner*.in'])
+    #rust_solution(src='main.rs') # Rust (rustc)
+    #go_solution(src='main.go') # Go
+    #script_solution(src='main.sh') # shebang line is required
+    #script_solution(src='main.pl') # shebang line is required
+    #script_solution(src='main.py') # shebang line is required
+    #script_solution(src='main.rb') # shebang line is required
+    #js_solution(src='main.js') # javascript (nodejs)
+    #hs_solution(src='main.hs') # haskell (stack + ghc)
+    #cs_solution(src='main.cs') # C# (mono)
+
+    ## Score
+    #expected_score(100)
+
+
+この中で、解答プログラムの言語に対応した行のコメントアウトを解除し、必要に応じてソースファイル名を変更します。今回は C++ の解答プログラムを追加するため、5 行目のコメントアウトを解除します。ファイル名については、今回は ``ans.cpp`` としてみます。
+
+
+.. code-block:: python
+    :linenos:
+    :caption: SOLUTION（一部抜粋）
+    :emphasize-lines: 1
+    :lineno-start: 5
+
+    cxx_solution(src='ans.cpp', flags=[]) # -std=c++11 -O2 as default
+
+
+.. tip::
+
+    実は、ここでコメントアウトを解除しなくとも、Rime はディレクトリ内のファイルの拡張子を参照することで解答プログラムの言語をよしなに解釈してくれます。ただ、想定誤解法の追加時にはここの設定が必須なので慣れておけると良いでしょう。
+
+
+それでは、次は実際の解答プログラムを追加します。ここでは、``cpp_correct/`` ディレクトリ内に自分でファイルを作成してプログラムを書きます。この問題では、例えば以下のようなプログラムになるでしょう。
+
+
+.. code-block:: cpp
+    :linenos:
+    :caption: ans.cpp
+
+    #include <iostream>
+    using namespace std;
+
+    int main() {
+        int a, b;
+        cin >> a >> b;
+        cout << a + b << '\n';
+        return 0;
+    }
+
+
+----
+
+
+テスト用プログラムの作成
+================================
+
+次に、テスト用プログラムを作成します。ここで言うテスト用プログラムとは、解答プログラムが正しく問題を解決するプログラムであるかどうかを判断するためのプログラムの総称であり、Rime においてユーザーが用意する必要のあるプログラムは主に以下の 2 つです。
+
+入力生成器 (generator)
+    解答プログラムに与える入力を生成するプログラム
+
+入力検証器 (validator)
+    解答プログラムに与える入力が問題の制約を正しく満たしているかを検証するプログラム
+
+
+.. tip::
+
+    想定される出力が複数ある場合や出力された実数の誤差を許容する場合などに、加えて **出力検証器 (judge)** が必要になることもあります。
+
+
+それでは、テスト用プログラムを作成していきます。 ``aplusb/`` ディレクトリ内で、以下のコマンドを実行してみましょう。
+
+
+.. code-block:: console
+
+    $ rime add . testset tests
+
+
+上の ``tests`` のところがテスト用プログラムのディレクトリ名になります。ここの名前はなんでも良いですが、慣例的に ``tests`` という名称が用いられることが多いです。
+
+すると、（エディタが起動したのち、） ``tests/`` というディレクトリが作られます。このディレクトリに移動してみましょう。中には、``TESTSET`` というファイル 1 つだけが入っています。
+
+
+.. code-block:: console
+
+    $ ls
+    PROBLEM     cpp_correct tests
+    $ cd tests/
+    $ ls
+    TESTSET
+
+
+``TESTSET`` ファイルの中身は以下のようになっています。
+
+
+.. code-block:: python
+    :linenos:
+    :caption: TESTSET
+    :emphasize-lines: 5,13
+
+    # -*- coding: utf-8; mode: python -*-
+
+    ## Input generators.
+    #c_generator(src='generator.c')
+    #cxx_generator(src='generator.cc', dependency=['testlib.h'])
+    #java_generator(src='Generator.java', encoding='UTF-8', mainclass='Generator')
+    #rust_generator(src='generator.rs')
+    #go_generator(src='generator.go')
+    #script_generator(src='generator.pl')
+
+    ## Input validators.
+    #c_validator(src='validator.c')
+    #cxx_validator(src='validator.cc', dependency=['testlib.h'])
+    #java_validator(src='Validator.java', encoding='UTF-8',
+    #               mainclass='tmp/validator/Validator')
+    #rust_validator(src='validator.rs')
+    #go_validator(src='validator.go')
+    #script_validator(src='validator.pl')
+
+    ## Output judges.
+    #c_judge(src='judge.c')
+    #cxx_judge(src='judge.cc', dependency=['testlib.h'],
+    #          variant=testlib_judge_runner)
+    #java_judge(src='Judge.java', encoding='UTF-8', mainclass='Judge')
+    #rust_judge(src='judge.rs')
+    #go_judge(src='judge.go')
+    #script_judge(src='judge.py')
+
+    ## Reactives.
+    #c_reactive(src='reactive.c')
+    #cxx_reactive(src='reactive.cc', dependency=['testlib.h', 'reactive.hpp'],
+    #             variant=kupc_reactive_runner)
+    #java_reactive(src='Reactive.java', encoding='UTF-8', mainclass='Judge')
+    #rust_reactive(src='reactive.rs')
+    #go_reactive(src='reactive.go')
+    #script_reactive(src='reactive.py')
+
+    ## Extra Testsets.
+    # icpc type
+    #icpc_merger(input_terminator='0 0\n')
+    # icpc wf ~2011
+    #icpc_merger(input_terminator='0 0\n',
+    #            output_replace=casenum_replace('Case 1', 'Case {0}'))
+    #gcj_merger(output_replace=casenum_replace('Case 1', 'Case {0}'))
+    id='X'
+    #merged_testset(name=id + '_Merged', input_pattern='*.in')
+    #subtask_testset(name='All', score=100, input_patterns=['*'])
+    # precisely scored by judge program like Jiyukenkyu (KUPC 2013)
+    #scoring_judge()
+
+
+この中で、テスト用プログラムの言語に対応した行のコメントアウトを解除し、必要に応じてソースファイル名を変更します。今回は C++ の generator, validator を追加するため、それぞれ該当する行のコメントアウトを解除します。
+
+
+.. code-block:: python
+    :linenos:
+    :caption: TESTSET（一部抜粋）
+    :emphasize-lines: 1
+    :lineno-start: 5
+
+    cxx_generator(src='generator.cc', dependency=['testlib.h'])
+
+
+.. code-block:: python
+    :linenos:
+    :emphasize-lines: 1
+    :lineno-start: 13
+
+    cxx_validator(src='validator.cc', dependency=['testlib.h'])
+
+
+さて、それでは入力生成器と入力検証器を作成していきます。これらは、Rime では `testlib <https://github.com/MikeMirzayanov/testlib>`_ というライブラリを用いて書かれることが多いです。
+
+
+.. admonition:: TODO
+
+    testlib の使い方みたいなページも用意したい。
+
+
+``tests/`` ディレクトリ内に、 ``generator.cc`` と ``validator.cc`` を追加します。入力生成器、入力検証器の詳しい仕様については こちら [TODO] をご覧ください。
+
+
+.. code-block:: cpp
+    :linenos:
+    :caption: generator.cc
+
+    #include <iostream>
+    #include "testlib.h"
+    using namespace std;
+
+    const int MIN_A = 1;
+    const int MAX_A = 10;
+    const int MIN_B = 1;
+    const int MAX_B = 10;
+
+    int main(int argc, char** argv) {
+        registerGen(argc, argv, 1);
+        for (int t = 0; t < 10; t++) {
+            ofstream of(format("02_random_%02d.in", t + 1).c_str());
+            int a = rnd.next(MIN_A, MAX_A);
+            int b = rnd.next(MIN_B, MAX_B);
+            of << a << ' ' << b << '\n';
+            of.close();
+        }
+        return 0;
+    }
+
+
+.. code-block:: cpp
+    :linenos:
+    :caption: validator.cc
+
+    #include <iostream>
+    #include "testlib.h"
+    using namespace std;
+
+    const int MIN_A = 1;
+    const int MAX_A = 10;
+    const int MIN_B = 1;
+    const int MAX_B = 10;
+
+    int main(int argc, char** argv) {
+        registerValidation(argc, argv);
+        inf.readInt(MIN_A, MAX_A, "A");
+        inf.readSpace();
+        inf.readInt(MIN_B, MAX_B, "B");
+        inf.readEoln();
+        inf.readEof();
+        return 0;
+    }
+
+
+上の入力生成器はランダムな入力を生成しますが、それ以外にサンプル入力やコーナーケースなど手で作ったケースを入れたくなるかもしれません。そういう場合は、 ``tests/`` ディレクトリ以下に ``.in`` という拡張子で入力ファイルを置いておくことで入力に含めることができます。
+
+
+.. admonition:: TODO
+
+    ``tests/*.diff`` ってなに？ 使ったことなかった（``tests/*.out`` と同じ？）
+
+
+----
+
+テストの実行
+================================
+
+ようやく準備が整ったので、テストを実行します。 ``aplusb/`` ディレクトリに戻り、以下のコマンドを実行してみましょう。
+
+
+.. code-block:: console
+
+    $ rime test
+    [ COMPILE  ] aplusb/tests: generator.cc
+    [ COMPILE  ] aplusb/tests: validator.cc
+    [ GENERATE ] aplusb/tests: generator.cc
+    [ VALIDATE ] aplusb/tests: OK
+    [ COMPILE  ] aplusb/cpp_correct
+    [  REFRUN  ] aplusb/cpp_correct
+    [   TEST   ] aplusb/cpp_correct: max 0.00s, acc 0.03s
+
+    Build Summary:
+    aplusb ... in: 40B, diff: 25B, md5: -
+    cpp_correct CXX 9 lines, 130B
 
     Test Summary:
-    a+b ... 4 solutions, 24 tests
-      cpp-correct      OK  max 0.00s, acc 0.09s
-      python-correct   OK  max 0.04s, acc 0.72s
-      cpp-TLE          OK  11-maximum.in: Time Limit Exceeded
-      cpp-WA-multiply  OK  Expectedly failed all challenge cases
+    aplusb ... 1 solutions, 10 tests
+    cpp_correct  OK  max 0.00s, acc 0.03s
 
     Error Summary:
     Total 0 errors, 0 warnings
 
-このコマンドは数秒で終了するはずです。この間に Rime は次の処理を行いました。
 
-- 問題ディレクトリ a+b 以下にある 4 つの解答 (cpp-correct, python-correct, cpp-TLE, cpp-WA-multiply) のコンパイル
-- 入出力ディレクトリ a+b/tests 以下にある入力生成器と入力検証器のコンパイル
-- 入力生成器を使ったランダム入力データの生成
-- 入力検証器を使った全入力データのフォーマットチェック
-- 解答プログラム a+b/cpp-correct に入力データを入れて走らせ、リファレンスとなる出力データを生成
-- 解答プログラム a+b/python-correct を走らせ、リファレンス出力データと同じ出力を出すことを確認
-- 誤答プログラム a+b/cpp-WA-multiply を走らせ、間違った出力を出すことを確認
-- 誤答プログラム a+b/cpp-TLE を走らせ、指定したタイムリミット (1秒) 内に終了しないことを確認
+.. attention::
 
-Rime が正しく動いていることを確認するため、試しに解答プログラムにバグを入れてみましょう。名前からお察しのとおり、問題 a+b は標準入力から二つの数を受け取り、その和を標準出力に書き出すプログラムを書け、という問題です。python-correct プログラムは次のようなコードになっています
+    **謎のコンパイルエラーでテストができない場合**
 
-.. code-block:: python
+    ひょっとしてあなたはいま Mac を使っていて、かつ ``bits/stdc++.h`` をインクルードしていませんか？ Rime では C++ のコンパイル時に環境変数 ``CXX`` を参照し、定義されていない場合は ``g++`` を使用します。Mac では ``g++`` と打つと clang が動くので ``bits/stdc++.h`` が無いと言われてしまいます。解決策としては ``bits/stdc++.h`` を使わないか、もしくは以下のように環境変数 ``CXX`` を指定してあげれば良いです（``g++-10`` のところは、必要に応じてインストールされている GCC のコマンド名に置き換えてください）。
 
-    # $ cat a+b/python-correct/main.py
-    #!/usr/bin/python
+    .. code-block:: console
 
-    import sys
+        $ CXX=g++-10 rime test
 
-    def main():
-      a, b = map(int, sys.stdin.read().strip().split())
-      print a + b
 
-    if __name__ == '__main__':
-      main()
+無事にテストをすることができました。
 
-これを、掛け算をするプログラムに書き換えます。
 
-.. code-block:: python
+.. admonition:: TODO
 
-    # $ vi a+b/python-correct/main.py
-    # ...
-    # $ cat a+b/python-correct/main.py
-    #!/usr/bin/python
-
-    import sys
-
-    def main():
-      a, b = map(int, sys.stdin.read().strip().split())
-      print a * b  # i can haz moar?
-
-    if __name__ == '__main__':
-      main()
-
-再び Rime を実行してみましょう。
-
-.. code-block:: bash
-
-    $ ./rime.py test
-    [   TEST   ] a+b/cpp-TLE: 11-maximum.in: Time Limit Exceeded
-    [   TEST   ] a+b/cpp-WA-multiply: Expectedly failed all challenge cases
-    [   TEST   ] a+b/cpp-correct: max 0.01s, acc 0.09s
-    ERROR: a+b/python-correct: 00-sample1.in: Wrong Answer
-      judge log: /home/nya/src/rime/example/a+b/rime-out/python-correct/00-sample1.judge
-    [   TEST   ] a+b/python-correct: 00-sample1.in: Wrong Answer
-
-    Test Summary:
-    a+b ... 4 solutions, 24 tests
-      cpp-correct      OK  max 0.01s, acc 0.09s
-      python-correct  FAIL 00-sample1.in: Wrong Answer
-      cpp-TLE          OK  11-maximum.in: Time Limit Exceeded
-      cpp-WA-multiply  OK  Expectedly failed all challenge cases
-
-    Error Summary:
-    ERROR: a+b/python-correct: 00-sample1.in: Wrong Answer
-      judge log: /home/nya/src/rime/example/a+b/rime-out/python-correct/00-sample1.judge
-    Total 1 errors, 0 warnings
-
-python-correct が 00-sample1.in で間違っていた、とのメッセージが出ています。具体的にどのような出力をしたのかはジャッジログファイルに残っています。
-
-.. code-block:: bash
-
-    $ cat /home/nya/src/rime/example/a+b/rime-out/python-correct/00-sample1.judge
-    --- /home/nya/src/rime/example/a+b/rime-out/tests/00-sample1.diff       2012-05-12 00:54:54.463139744 +0900
-    +++ /home/nya/src/rime/example/a+b/rime-out/python-correct/00-sample1.out       2012-05-12 01:08:55.827436428 +0900
-    @@ -1 +1 @@
-    -7
-    +12
+    * WA コードを追加してテスト、challenge_cases の設定
+    * 制約違反のケースを出力するジェネレータを作ってみる
+    * rime pack

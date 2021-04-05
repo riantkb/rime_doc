@@ -5,7 +5,7 @@
 
 
 ================================
-Rime
+Rime 非公式ドキュメント
 ================================
 
 https://github.com/icpc-jag/rime
@@ -36,7 +36,7 @@ https://github.com/icpc-jag/rime
 
 .. toctree::
    :maxdepth: 2
-   :caption: Rime の構成
+   :caption: リファレンス
 
    ref/structure
    ref/configuration
