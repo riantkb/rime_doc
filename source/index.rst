@@ -8,8 +8,6 @@
 Rime 非公式ドキュメント
 ================================
 
-https://github.com/icpc-jag/rime
-
 
 .. admonition:: このページに関して
 
