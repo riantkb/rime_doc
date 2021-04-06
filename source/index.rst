@@ -11,42 +11,46 @@ Rime 非公式ドキュメント
 
 .. admonition:: このページに関して
 
-   このページは、 `Rime <https://github.com/icpc-jag/rime>`_ の **非公式** ドキュメントです。一部の記述を `公式ドキュメント <https://rime.readthedocs.io/ja/latest/>`_ から転載および改変して使用しています。
+    このページは、 `Rime <https://github.com/icpc-jag/rime>`_ の **非公式** ドキュメントです。一部の記述を `公式ドキュメント <https://rime.readthedocs.io/ja/latest/>`_ から転載および改変して使用しています。
 
 ----
 
 .. toctree::
-   :maxdepth: 2
-   :caption: 最初のステップ
+    :maxdepth: 2
+    :caption: 最初のステップ
 
-   intro/overview
-   intro/install
-
-----
-
-.. toctree::
-   :maxdepth: 2
-   :caption: チュートリアル
-
-   intro/quickstart
+    intro/overview
+    intro/install
 
 ----
 
 .. toctree::
-   :maxdepth: 2
-   :caption: リファレンス
+    :maxdepth: 2
+    :caption: チュートリアル
 
-   ref/structure
-   ref/configuration
-   ref/testspec
-   ref/command
+    intro/quickstart
 
 ----
 
-Indices
-================================
+.. toctree::
+    :maxdepth: 2
+    :caption: こういうとき、どうしたら？
 
-* :ref:`genindex`
+    reverse-dict/judge/index
 
+
+----
+
+.. toctree::
+    :maxdepth: 2
+    :caption: リファレンス
+
+
+.. ----
+
+.. Indices
+.. ================================
+
+.. * :ref:`genindex`
 .. * :ref:`modindex`
 .. * :ref:`search`
