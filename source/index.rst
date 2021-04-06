@@ -13,6 +13,8 @@ Rime 非公式ドキュメント
 
     このページは、 `Rime <https://github.com/icpc-jag/rime>`_ の **非公式** ドキュメントです。一部の記述を `公式ドキュメント <https://rime.readthedocs.io/ja/latest/>`_ から転載および改変して使用しています。
 
+    現在、 **クイックスタート** 以外のページはほとんど無が存在しています。段々と情報が書かれていく可能性があります。
+
 ----
 
 .. toctree::
@@ -44,6 +46,9 @@ Rime 非公式ドキュメント
 .. toctree::
     :maxdepth: 2
     :caption: リファレンス
+
+    ref/command/index
+    ref/setting/index
 
 
 .. ----
