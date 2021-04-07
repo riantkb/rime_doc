@@ -48,9 +48,3 @@
     -k, --keep_going   Do not skip tests on failures.
     -p, --precise      Do not run timing tasks concurrently.
     -q, --quiet        Skip unimportant message.
-
-
-.. admonition:: COMMENT
-
-    ``rime init`` ではなく ``rime_init`` であることになにか意味があるのだろうか。
-    あと、何も指定しなかった場合に ``--git`` がデフォルトになってほしい（git と同じように ``rime init`` とすると init できてほしい）気持ちも少しはある。
