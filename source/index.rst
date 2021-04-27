@@ -13,7 +13,7 @@ Rime 非公式ドキュメント (beta)
 
     このページは、プログラミングコンテストの問題準備補助ツールである `Rime <https://github.com/icpc-jag/rime>`_ の **非公式** ドキュメントです。一部の記述を `公式ドキュメント <https://rime.readthedocs.io/ja/latest/>`_ から転載および改変して使用しています。
 
-    現在、 :doc:`intro/quickstart` 以外のページはほとんど無が存在しています。段々と情報が書かれていく可能性があります。
+    現在、 :doc:`tutorial/quickstart` 以外のページはほとんど無が存在しています。段々と情報が書かれていく可能性があります。
 
 ----
 
@@ -30,7 +30,8 @@ Rime 非公式ドキュメント (beta)
     :maxdepth: 2
     :caption: チュートリアル
 
-    intro/quickstart
+    tutorial/quickstart
+    tutorial/nextstep
 
 ----
 
