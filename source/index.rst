@@ -31,7 +31,7 @@ Rime 非公式ドキュメント (beta)
     :caption: チュートリアル
 
     tutorial/quickstart
-    tutorial/nextstep
+    tutorial/nextstep/index
 
 ----
 

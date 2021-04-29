@@ -30,6 +30,8 @@
 
 ----
 
+.. _quickstart-make_problem:
+
 
 新規問題の作成
 ================================
@@ -106,6 +108,8 @@
 
 ----
 
+
+.. _quickstart-make_solution:
 
 解答プログラムの作成
 ================================
@@ -398,11 +402,11 @@
 
     Build Summary:
     aplusb ... in: 40B, diff: 25B, md5: -
-    cpp_correct CXX 9 lines, 130B
+      cpp_correct CXX 9 lines, 130B
 
     Test Summary:
     aplusb ... 1 solutions, 10 tests
-    cpp_correct  OK  max 0.00s, acc 0.03s
+      cpp_correct  OK  max 0.00s, acc 0.03s
 
     Error Summary:
     Total 0 errors, 0 warnings
